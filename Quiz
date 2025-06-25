@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neues Leben nach der Sucht – Quiz</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f4f4f4, #e8f5e9);
+      color: #333;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+      margin-bottom: 30px;
+    }
+    .question {
+      border-left: 6px solid #2e7d32;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 30px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s;
+    }
+    .options button {
+      display: block;
+      margin: 10px 0;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      font-size: 1em;
+      background-color: #f1f8e9;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .options button:hover {
+      background-color: #dcedc8;
+    }
+    .correct {
+      background-color: #c8f7c5 !important;
+      border-color: #43a047 !important;
+      color: #1b5e20;
+      animation: pulseGreen 0.5s;
+    }
+    .wrong {
+      background-color: #f7c5c5 !important;
+      border-color: #c62828 !important;
+      color: #b71c1c;
+      animation: shake 0.5s;
+    }
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #end {
+      font-size: 1.6em;
+      margin-top: 40px;
+      font-weight: bold;
+      color: #2e7d32;
+      text-align: center;
+    }
+    button {
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌀 Neues Leben nach der Sucht – Das Labyrinth</h1>
+  <div id="game"></div>
+  <div id="end"></div>
+
+  <script>
+    const questions = [
+      {
+        text: "Was ist eine besonders nachhaltige Strategie, um mit Suchtdruck umzugehen?",
+        options: [
+          { text: "Ablenkung durch Fernsehen oder Social Media", correct: false, deadEnd: "Das kann kurzfristig helfen, ist aber keine langfristige Lösung." },
+          { text: "Ein Notfallplan mit konkreten Handlungen für kritische Situationen", correct: true },
+          { text: "Das Ignorieren von Auslösern, um ihnen keine Macht zu geben", correct: false, deadEnd: "Auslöser zu ignorieren kann gefährlich sein – man muss lernen, mit ihnen umzugehen." },
+        ]
+      },
+      {
+        text: "Welche Maßnahme stärkt langfristig die Abstinenzmotivation am meisten?",
+        options: [
+          { text: "Das Vermeiden aller Erinnerungen an die Vergangenheit", correct: false, deadEnd: "Vergangenheitsverarbeitung ist ein Teil des Heilungsprozesses." },
+          { text: "Das regelmäßige Reflektieren persönlicher Werte und Ziele", correct: true },
+          { text: "Der vollständige Rückzug aus der Gesellschaft", correct: false, deadEnd: "Soziale Isolation erhöht Rückfallrisiken deutlich." },
+        ]
+      },
+      {
+        text: "Was ist ein sinnvolles Verhalten bei starkem Suchtdruck?",
+        options: [
+          { text: "Alleine bleiben und warten, bis der Druck nachlässt", correct: false, deadEnd: "Allein mit Druck umzugehen erhöht das Risiko eines Rückfalls." },
+          { text: "Sich mit Ersatzverhalten wie übermäßigem Essen beruhigen", correct: false, deadEnd: "Ersatzverhalten kann langfristig ebenfalls problematisch sein." },
+          { text: "Eine Vertrauensperson kontaktieren und offen darüber sprechen", correct: true },
+        ]
+      },
+      {
+        text: "Was hilft nachweislich, um Rückfällen vorzubeugen?",
+        options: [
+          { text: "Das ständige Erinnern an die negativen Folgen der Sucht", correct: false, deadEnd: "Negative Erinnerungen können triggern – der Fokus sollte auf Lösungen liegen." },
+          { text: "Der Wille, es allein zu schaffen, ohne Hilfe", correct: false, deadEnd: "Allein durchzuhalten führt selten zu stabiler Abstinenz." },
+          { text: "Tägliche Routinen, Unterstützungssysteme und Achtsamkeitstraining", correct: true },
+        ]
+      },
+      {
+        text: "Welche Einstellung macht einen Rückfall weniger wahrscheinlich?",
+        options: [
+          { text: "Sich selbst keine Schwäche erlauben", correct: false, deadEnd: "Selbstmitgefühl ist ein wichtiger Schutzfaktor in der Rückfallprophylaxe." },
+          { text: "Fehler als Lernchancen sehen und flexibel darauf reagieren", correct: true },
+          { text: "Perfektionismus und das Vermeiden jeglichen Scheiterns", correct: false, deadEnd: "Perfektionismus setzt unter Druck und kann Rückfälle begünstigen." },
+        ]
+      },
+      {
+        text: "Was ist ein sinnvoller Schritt nach einem Rückfall?",
+        options: [
+          { text: "Die Situation reflektieren und den Rückfall analysieren", correct: true },
+          { text: "Sich selbst beschimpfen, um disziplinierter zu werden", correct: false, deadEnd: "Selbstabwertung hilft nicht beim Wiedereinstieg in den Ausstieg." },
+          { text: "Wieder wie zuvor weitermachen und schweigen", correct: false, deadEnd: "Verschweigen führt oft zu wiederholten Rückfällen." },
+        ]
+      },
+      {
+        text: "Welche Art von Umfeld unterstützt am besten ein suchtfreies Leben?",
+        options: [
+          { text: "Ein Umfeld mit unterstützenden und reflektierten Menschen", correct: true },
+          { text: "Ein Umfeld, das die Vergangenheit verschweigt", correct: false, deadEnd: "Verdrängung führt selten zu nachhaltiger Veränderung." },
+          { text: "Ein Umfeld ohne jede Kontrolle oder Feedback", correct: false, deadEnd: "Ein unterstützendes Umfeld braucht auch Rückmeldung." },
+        ]
+      },
+      {
+        text: "Was kann helfen, wenn emotionale Leere auftritt?",
+        options: [
+          { text: "Ein offenes Gespräch mit einem Therapeuten oder Freund", correct: true },
+          { text: "Das Verdrängen der Gefühle", correct: false, deadEnd: "Verdrängung führt zu innerem Druck und Rückfallrisiken." },
+          { text: "Sich mit Konsum abzulenken", correct: false, deadEnd: "Konsumverhalten verstärkt oft emotionale Leere langfristig." },
+        ]
+      },
+      {
+        text: "Wie kann man schädliche Denkmuster erkennen und verändern?",
+        options: [
+          { text: "Durch kognitive Umstrukturierung mit professioneller Unterstützung", correct: true },
+          { text: "Indem man sich zwingt, positiv zu denken", correct: false, deadEnd: "Zwanghaftes Positivdenken kann Probleme verschleiern." },
+          { text: "Indem man sie ignoriert", correct: false, deadEnd: "Was man ignoriert, wirkt oft im Hintergrund weiter." },
+        ]
+      },
+      {
+        text: "Was bedeutet Selbstfürsorge im Alltag?",
+        options: [
+          { text: "Sich regelmäßig Zeit für Erholung und Bedürfnisse zu nehmen", correct: true },
+          { text: "Sich alles zu gönnen, was man möchte", correct: false, deadEnd: "Selbstfürsorge ist nicht gleich Selbstbelohnung." },
+          { text: "Nur dann etwas für sich tun, wenn alles erledigt ist", correct: false, deadEnd: "Warten auf perfekte Bedingungen verhindert Selbstfürsorge." },
+        ]
+      }
+    ];
+
+    let current = 0;
+    const gameDiv = document.getElementById("game");
+    const endDiv = document.getElementById("end");
+
+    function renderQuestion() {
+      if (current >= questions.length) {
+        endDiv.innerHTML = "🎉 Du hast das Ziel erreicht! Willkommen im Neuanfang.";
+        gameDiv.innerHTML = "";
+        return;
+      }
+
+      const q = questions[current];
+      let html = `<div class='question'><strong>Frage ${current + 1}:</strong><br><br>${q.text}<div class='options'>`;
+      q.options.forEach((opt, idx) => {
+        html += `<button id='opt${idx}' onclick='answer(${idx})'>${String.fromCharCode(65 + idx)}) ${opt.text}</button>`;
+      });
+      html += `</div></div>`;
+      gameDiv.innerHTML = html;
+    }
+
+    function answer(index) {
+      const opt = questions[current].options[index];
+      const btn = document.getElementById(`opt${index}`);
+      if (opt.correct) {
+        btn.classList.add("correct");
+        setTimeout(() => {
+          current++;
+          renderQuestion();
+        }, 600);
+      } else {
+        btn.classList.add("wrong");
+        setTimeout(() => {
+          gameDiv.innerHTML = `<div class='question'><strong>❌ Sackgasse!</strong><br><br>${opt.deadEnd}<br><br><button onclick='reset()'>🔁 Noch einmal versuchen</button></div>`;
+        }, 500);
+      }
+    }
+
+    function reset() {
+      current = 0;
+      endDiv.innerHTML = "";
+      renderQuestion();
+    }
+
+    renderQuestion();
+  </script>
+</body>
+</html>
